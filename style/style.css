@@ -29,8 +29,23 @@ h1, h2, h3 { font-family: 'Playfair Display', serif; color: #2c3e50; }
     backface-visibility: hidden; 
     background: #fdfbf7; border: 1px solid #e8e3d3;
     border-radius: 4px 15px 15px 4px; overflow: hidden;
-    /* We moved the shadow down here so it only wraps the physical pages */
     box-shadow: 0 10px 30px rgba(0,0,0,0.5); 
+    transform-origin: center center; /* THE MAGIC FIX: Stops pages from swinging left early! */
+}
+
+.cover { 
+    background: linear-gradient(45deg, #1a1a1a, #2c2c2c); 
+    color: #d4af37; 
+    display: flex; 
+    flex-direction: column; 
+    align-items: center; 
+    justify-content: center; 
+    text-align: center; 
+    border: none !important; 
+    box-shadow: inset 15px 0 30px rgba(0,0,0,0.9), inset -2px 0 10px rgba(0,0,0,0.5); 
+    position: absolute !important; /* THE MAGIC FIX: Prevents it from breaking the layout */
+    width: 100%;
+    height: 100%;
 }
 
 /* THE CLICK FIX: This physically prevents invisible elements from blocking your clicks! */
