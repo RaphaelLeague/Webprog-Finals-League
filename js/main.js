@@ -7,7 +7,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let currentLocation = 1;
     let numOfPages = pages.length;
 
-    // Initial Stack Z-Index
+    // Initial Stack
     function setStack() {
         pages.forEach((page, index) => { 
             page.style.zIndex = numOfPages - index; 
@@ -20,6 +20,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const page = pages[currentLocation - 1];
             page.classList.add("flipped");
             
+            // Adjust stacking halfway through flip
             setTimeout(() => { 
                 page.style.zIndex = currentLocation; 
             }, 600);
@@ -32,7 +33,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function goPrevPage() {
-        // RESET LOGIC: If on the very last page, reset all pages to the front
+        // RESET TO FRONT if on final page
         if (currentLocation > numOfPages) {
             book.style.transform = "translateX(200px)";
             pages.forEach((page, index) => {
@@ -43,7 +44,6 @@ document.addEventListener('DOMContentLoaded', () => {
             });
             currentLocation = 1;
         } 
-        // Normal flip back
         else if (currentLocation > 1) {
             const page = pages[currentLocation - 2];
             page.classList.remove("flipped");
@@ -60,7 +60,7 @@ document.addEventListener('DOMContentLoaded', () => {
     nextBtns.forEach(btn => btn.addEventListener("click", goNextPage));
     prevBtns.forEach(btn => btn.addEventListener("click", goPrevPage));
 
-    // Supabase
+    // Supabase Initialization
     const supabaseUrl = 'https://safdltefbgdidkrwnjyf.supabase.co';
     const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNhZmRsdGVmYmdkaWRrcnduanlmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzE2NzgxMjIsImV4cCI6MjA4NzI1NDEyMn0._Ya4kMNQ0FIcQ36tvUJE1LTzqTsqqnNAr9w34lBf8y0';
     
@@ -85,7 +85,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 formStatus.textContent = "Error: Please try again.";
                 formStatus.style.color = "red";
             } else {
-                formStatus.textContent = "Message saved successfully!";
+                formStatus.textContent = "Message saved!";
                 formStatus.style.color = "green";
                 contactForm.reset();
             }
