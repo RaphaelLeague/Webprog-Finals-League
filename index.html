@@ -3,81 +3,140 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Raphael League | Profile</title>
+    <title>Raphael League | Elegant 3D Book Profile</title>
     <link rel="stylesheet" href="style/style.css">
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;1,600&family=Source+Sans+Pro:wght@400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
+
     <div class="desk">
         <div class="book" id="book">
+            
             <div class="page" id="p1">
                 <div class="front cover">
-                    <div>
+                    <div class="cover-content">
                         <h1>Raphael League</h1>
-                        <p>IT Student & Researcher</p>
-                        <button class="next-btn">Open Book -></button>
+                        <p class="subtitle">IT Student & Researcher</p>
+                        <button class="next-btn open-book-btn">Open Book <i class="fas fa-arrow-right"></i></button>
                     </div>
                 </div>
                 <div class="back page-content">
-                    <img src="https://i.postimg.cc/L5x5WMF6/SONY6273.jpg" class="profile-img">
+                    <img src="https://i.postimg.cc/L5x5WMF6/SONY6273.jpg" alt="Raphael League" class="profile-img">
                     <h2>Raphael Gabriel League</h2>
-                    <p class="bio-text">I hate coding but I love SQL and research.</p>
-                    <div class="page-footer"><button class="prev-btn"><- Close</button></div>
+                    <h3 class="studentschool">IT Student @ Asia Pacific College</h3>
+                    <p class="bio-text">What's up! I'm Gab. I hate coding but I love to do SQL and research.</p>
+                    <div class="page-footer">
+                        <button class="prev-btn"><i class="fas fa-arrow-left"></i> Close</button>
+                    </div>
                 </div>
             </div>
 
             <div class="page" id="p2">
                 <div class="front page-content">
-                    <h2>Background</h2>
-                    <p>STEM (2022-2024)<br>BSIT (2024-2028)</p>
-                    <div class="page-footer"><button class="next-btn">Turn Page -></button></div>
+                    <h2>Background & Projects</h2>
+                    <div class="info-block">
+                        <h3>Educational Background</h3>
+                        <p><strong>STEM</strong><br><span class="date-text">June 2022 - April 2024 (Asia Pacific College)</span></p>
+                        <p class="mt-10"><strong>BS Information Technology</strong><br><span class="date-text">2024 - 2028 (Asia Pacific College)</span></p>
+                    </div>
+                    <div class="info-block mt-20">
+                        <h3>Projects</h3>
+                        <ul class="elegant-list">
+                            <li><strong>RamBus:</strong> Developer and Researcher</li>
+                            <li><strong>Smoke & Fire Detector:</strong> Developer and Researcher</li>
+                        </ul>
+                    </div>
+                    <div class="page-footer">
+                        <button class="next-btn">Turn Page <i class="fas fa-arrow-right"></i></button>
+                    </div>
                 </div>
                 <div class="back page-content">
-                    <h2>Hobbies</h2>
+                    <h2>Hobbies & Interests</h2>
                     <div class="hobbies-list">
                         <div class="hobby-category">
                             <h3><i class="fas fa-book-open"></i> Reading</h3>
                             <div class="hobby-items">
-                                <img src="https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1759623080i/28705056.jpg">
-                                <img src="https://i5.walmartimages.com/seo/Dante-s-Inferno-The-Divine-Comedy-Book-One-Paperback-9781434444745_4baa4dbe-24f8-4298-9fa4-30d85dd6d3ce.b162e863409f0d89f6a7ecae3315b229.jpeg">
+                                <img src="https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1759623080i/28705056.jpg" alt="Reading">
+                                <img src="https://i5.walmartimages.com/seo/Dante-s-Inferno-The-Divine-Comedy-Book-One-Paperback-9781434444745_4baa4dbe-24f8-4298-9fa4-30d85dd6d3ce.b162e863409f0d89f6a7ecae3315b229.jpeg" alt="Reading">
+                            </div>
+                        </div>
+                        <div class="hobby-category">
+                            <h3><i class="fas fa-gamepad"></i> Gaming</h3>
+                            <div class="hobby-items">
+                                <img src="https://images.seeklogo.com/logo-png/37/2/valorant-logo-png_seeklogo-379976.png" alt="Gaming">
+                                <img src="https://img.playstationtrophies.org/images/2025/08/29/icon/31f7655397589bb36a341c2d8454864d-l.png" alt="Gaming">
                             </div>
                         </div>
                         <div class="hobby-category">
                             <h3><i class="fas fa-music"></i> Music</h3>
                             <div class="hobby-items">
-                                <img src="https://upload.wikimedia.org/wikipedia/en/b/b9/Freudian_by_Daniel_Caesar.jpg">
-                                <img src="https://upload.wikimedia.org/wikipedia/en/e/eb/Bruno_Mars_-_Doo-Wops_%26_Hooligans.png">
+                                <img src="https://upload.wikimedia.org/wikipedia/en/b/b9/Freudian_by_Daniel_Caesar.jpg" alt="Music">
+                                <img src="https://upload.wikimedia.org/wikipedia/en/e/eb/Bruno_Mars_-_Doo-Wops_%26_Hooligans.png" alt="Music">
                             </div>
                         </div>
                     </div>
-                    <div class="page-footer"><button class="prev-btn"><- Prev</button></div>
+                    <div class="page-footer">
+                        <button class="prev-btn"><i class="fas fa-arrow-left"></i> Prev</button>
+                    </div>
                 </div>
             </div>
 
             <div class="page" id="p3">
                 <div class="front page-content">
-                    <h2>Skills</h2>
+                    <h2>Technical Skills</h2>
                     <div class="skill-list">
-                        <img src="https://upload.wikimedia.org/wikipedia/commons/6/61/HTML5_logo_and_wordmark.svg">
-                        <img src="https://upload.wikimedia.org/wikipedia/commons/d/d5/CSS3_logo_and_wordmark.svg">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/61/HTML5_logo_and_wordmark.svg/500px-HTML5_logo_and_wordmark.svg.png" alt="HTML">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d5/CSS3_logo_and_wordmark.svg/1452px-CSS3_logo_and_wordmark.svg.png" alt="CSS">
+                        <img src="https://1000logos.net/wp-content/uploads/2020/09/JavaScript-Logo.png" alt="JavaScript">
+                        <img src="https://p1.hiclipart.com/preview/415/298/342/sql-server-logo-mysql-database-microsoft-sql-server-php-text-line-company-png-clipart.jpg" alt="SQL">
                     </div>
-                    <div class="page-footer"><button class="next-btn">Turn Page -></button></div>
+                    <h2 class="mt-20">Soft Skills</h2>
+                    <div class="soft-skills">
+                        <span>Teamwork</span>
+                        <span>Leadership</span>
+                        <span>Adaptability</span>
+                    </div>
+                    <div class="page-footer">
+                        <button class="next-btn">Turn Page <i class="fas fa-arrow-right"></i></button>
+                    </div>
                 </div>
                 <div class="back page-content">
-                    <h2>Contact</h2>
+                    <h2>Send a Message</h2>
                     <form id="contactForm" class="contact-form">
-                        <input type="text" id="senderName" placeholder="Name" required>
-                        <input type="email" id="senderEmail" placeholder="Email" required>
-                        <textarea id="senderMessage" placeholder="Message" required></textarea>
-                        <button type="submit" id="submitBtn">Send</button>
+                        <input type="text" id="senderName" placeholder="Your Name" required>
+                        <input type="email" id="senderEmail" placeholder="Your Email" required>
+                        <textarea id="senderMessage" placeholder="Your Message" rows="4" required></textarea>
+                        <button type="submit" id="submitBtn">Send to Database</button>
                         <p id="formStatus"></p>
                     </form>
-                    <div class="page-footer"><button class="prev-btn"><- Prev</button></div>
+                    <div class="page-footer">
+                        <button class="prev-btn"><i class="fas fa-arrow-left"></i> Prev</button>
+                    </div>
                 </div>
             </div>
+
+            <div class="page" id="p4">
+                <div class="front page-content">
+                    <h2>Thanks for reading!</h2>
+                    <div class="social-links">
+                        <p><i class="fas fa-envelope"></i> <strong>Email:</strong><br> <span class="dim-text">raphaelgabriel.league@gmail.com</span></p>
+                        <br>
+                        <p><i class="fab fa-linkedin"></i> <strong>LinkedIn:</strong><br> <a href="https://www.linkedin.com/in/raphael-league-445167256/" target="_blank">linkedin.com/in/raphael-league</a></p>
+                        <br>
+                        <p><i class="fab fa-github"></i> <strong>GitHub:</strong><br> <a href="https://github.com/RaphaelLeague" target="_blank">github.com/RaphaelLeague</a></p>
+                    </div>
+                    <div class="page-footer">
+                        <button class="next-btn">Close Book <i class="fas fa-arrow-right"></i></button>
+                    </div>
+                </div>
+                <div class="back cover"></div>
+            </div>
+
         </div>
     </div>
+
     <script src="js/main.js"></script>
 </body>
 </html>
