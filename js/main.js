@@ -7,6 +7,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let currentLocation = 1;
     let numOfPages = pages.length;
 
+    // Handles stacking so flipped pages stay on the left correctly
     function updateZIndex() {
         pages.forEach((page, index) => {
             if (index < currentLocation - 1) {
@@ -33,7 +34,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function goPrevPage(e) {
         if (currentLocation > 1) {
-            // FIX: If we are on the final page, trigger the reset logic
+            // FIX: If clicking "Close Book" on the final page reset to front
             if (currentLocation > numOfPages && e.target.closest('.reset-trigger')) {
                 resetBook();
                 return;
