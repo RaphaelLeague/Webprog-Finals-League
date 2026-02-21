@@ -7,12 +7,13 @@ document.addEventListener('DOMContentLoaded', () => {
     let currentLocation = 1;
     let numOfPages = pages.length;
 
+    // Manages stacking so flipped pages stay on the left correctly
     function updateZIndex() {
         pages.forEach((page, index) => {
             if (index < currentLocation - 1) {
-                page.style.zIndex = index + 1;
+                page.style.zIndex = index + 1; // Left side stack
             } else {
-                page.style.zIndex = numOfPages - index;
+                page.style.zIndex = numOfPages - index; // Right side stack
             }
         });
     }
@@ -33,8 +34,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function goPrevPage(e) {
         if (currentLocation > 1) {
-            // Check for Reset to Front logic
-            if (currentLocation > numOfPages && e.target.innerText.includes("Close Book")) {
+            // Check if clicking "Close Book" on the final page
+            if (currentLocation > numOfPages && e.target.closest('.reset-trigger')) {
                 resetBook();
                 return;
             }
@@ -58,7 +59,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     nextBtns.forEach(btn => btn.addEventListener("click", goNextPage));
-    prevBtns.forEach(btn => btn.addEventListener("click", (e) => goPrevPage(e)));
+    prevBtns.forEach(btn => btn.addEventListener("click", goPrevPage));
 
     // Supabase
     const _supabase = supabase.createClient('https://safdltefbgdidkrwnjyf.supabase.co', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNhZmRsdGVmYmdkaWRrcnduanlmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzE2NzgxMjIsImV4cCI6MjA4NzI1NDEyMn0._Ya4kMNQ0FIcQ36tvUJE1LTzqTsqqnNAr9w34lBf8y0');
