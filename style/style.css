@@ -1,172 +1,121 @@
 * { margin: 0; padding: 0; box-sizing: border-box; }
 
 body {
-    background-color: #1a1a24; /* Dark desk environment */
+    background: #222; /* Dark desk */
     font-family: 'Source Sans Pro', sans-serif;
     color: #333;
     display: flex;
     justify-content: center;
     align-items: center;
-    min-height: 100vh;
-    overflow-x: hidden;
+    height: 100vh;
+    overflow: hidden;
 }
 
 h1, h2, h3 { font-family: 'Playfair Display', serif; color: #111; }
 
-.desk-environment {
-    width: 100%;
-    max-width: 1100px;
-    padding: 20px;
-    perspective: 1500px; /* Important for 3D effect */
+.desk {
+    perspective: 1500px; /* Gives the 3D depth */
 }
 
 /* THE BOOK */
-.book-container {
-    display: flex;
-    width: 100%;
-    height: 650px;
-    background: #fdfbf7; /* Off-white paper color */
-    box-shadow: 0 20px 50px rgba(0,0,0,0.5), inset 0 0 50px rgba(220, 210, 190, 0.3);
-    border-radius: 4px 15px 15px 4px;
+.book {
+    width: 800px; /* Full open width */
+    height: 550px;
     position: relative;
+    transition: transform 0.8s ease;
+    /* Starts shifted right because only the right cover is visible */
+    transform: translateX(200px); 
 }
 
-.book-container::after {
-    /* The Spine shadow right down the middle */
-    content: '';
+/* THE PAGES */
+.page {
+    width: 50%; /* 400px wide */
+    height: 100%;
     position: absolute;
-    top: 0; bottom: 0; left: 50%;
-    width: 40px;
-    transform: translateX(-50%);
-    background: linear-gradient(to right, 
-        rgba(0,0,0,0) 0%, 
-        rgba(0,0,0,0.1) 40%, 
-        rgba(0,0,0,0.15) 50%, 
-        rgba(0,0,0,0.1) 60%, 
-        rgba(0,0,0,0) 100%);
-    z-index: 10;
-    pointer-events: none;
+    right: 0; /* All pages stack on the right initially */
+    transform-style: preserve-3d;
+    transform-origin: left center; /* Hinges on the left side (the spine) */
+    transition: transform 0.8s cubic-bezier(0.645, 0.045, 0.355, 1);
 }
 
-.book-page {
-    flex: 1;
-    padding: 50px 40px;
-    position: relative;
+/* The physical paper */
+.front, .back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden; /* Hides the back of the div when flipped */
+    border-radius: 4px 15px 15px 4px;
+    box-shadow: inset 0 0 20px rgba(0,0,0,0.05);
 }
 
-.left-page {
-    border-right: 1px solid rgba(0,0,0,0.05);
+.front { background: #fdfbf7; } /* Off-white paper */
+.back {
+    background: #fdfbf7;
+    transform: rotateY(180deg); /* The back side starts flipped 180 deg */
+    border-radius: 15px 4px 4px 15px;
+}
+
+/* FLIPPING THE PAGE */
+.page.flipped {
+    transform: rotateY(-180deg); /* Swings the page left */
+}
+
+/* COVER DESIGN */
+.cover {
+    background: radial-gradient(circle at center, #2b1055, #15082e);
+    color: #ffdd59;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    border: 2px solid #5a3e8c;
+    box-shadow: inset 0 0 50px rgba(0,0,0,0.5);
+}
+
+.cover h1 { color: #ffdd59; margin-bottom: 10px; }
+.cover .open-book-btn { margin-top: 30px; background: #ffdd59; color: #000; padding: 12px 24px; border: none; font-weight: bold; border-radius: 20px; cursor: pointer; }
+
+/* PAGE CONTENT & SCROLLING */
+.page-content {
+    padding: 40px;
+    overflow-y: auto; /* Allows scrolling inside a page if content is long */
+    overflow-x: hidden;
+    height: 100%;
     display: flex;
     flex-direction: column;
-    justify-content: center;
 }
 
-.right-page {
-    position: relative;
-    perspective: 1500px;
+/* Hide scrollbar for a cleaner book look */
+.page-content::-webkit-scrollbar { width: 5px; }
+.page-content::-webkit-scrollbar-thumb { background: #ccc; border-radius: 5px; }
+
+/* TYPOGRAPHY & LAYOUT */
+h2 { border-bottom: 2px solid #ddd; padding-bottom: 10px; margin-bottom: 20px; }
+.profile-img { width: 120px; height: 120px; border-radius: 50%; object-fit: cover; margin-bottom: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.2); }
+.info-block { margin-bottom: 20px; }
+.info-block ul { margin-left: 20px; margin-top: 5px; }
+
+/* BUTTONS */
+.page-footer { margin-top: auto; padding-top: 20px; display: flex; justify-content: space-between; }
+.next-btn, .prev-btn {
+    background: none; border: none; font-family: inherit; font-weight: bold; font-size: 1rem; color: #b71c1c; cursor: pointer; transition: 0.3s;
 }
+.next-btn:hover { transform: translateX(5px); }
+.prev-btn:hover { transform: translateX(-5px); }
 
-/* FLIPPING PAGES (Right side) */
-.flipping-page {
-    position: absolute;
-    top: 0; left: 0; right: 0; bottom: 0;
-    padding: 50px 40px;
-    background: #fdfbf7;
-    border-radius: 0 15px 15px 0;
-    transform-origin: left center;
-    transition: transform 0.8s cubic-bezier(0.645, 0.045, 0.355, 1), opacity 0.6s ease;
-    
-    /* Default Hidden State (Flipped over) */
-    transform: rotateY(90deg);
-    opacity: 0;
-    pointer-events: none;
-}
-
-/* Active State (Laying flat) */
-.flipping-page.active {
-    transform: rotateY(0deg);
-    opacity: 1;
-    pointer-events: auto;
-    z-index: 5;
-}
-
-/* LEFT PAGE CONTENT */
-.profile-img {
-    width: 140px; height: 140px;
-    border-radius: 50%;
-    object-fit: cover;
-    margin-bottom: 20px;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-}
-
-.studentschool { font-size: 1.1rem; color: #555; margin-bottom: 10px; }
-.bio { font-size: 1rem; line-height: 1.6; margin-bottom: 30px; }
-
-.table-of-contents h3 { margin-bottom: 15px; font-size: 1.4rem; border-bottom: 2px solid #111; padding-bottom: 5px; display: inline-block;}
-.table-of-contents ul { list-style: none; }
-.table-of-contents li { margin-bottom: 12px; }
-
-.nav-btn {
-    background: none; border: none;
-    font-family: 'Playfair Display', serif;
-    font-size: 1.2rem;
-    color: #555;
-    cursor: pointer;
-    text-align: left;
-    transition: 0.3s;
-    padding-left: 0;
-}
-
-.nav-btn:hover, .nav-btn.active {
-    color: #b71c1c; /* Deep red bookmark color */
-    transform: translateX(5px);
-    font-weight: bold;
-}
-
-/* RIGHT PAGE CONTENT */
-.section-title { font-size: 2.2rem; margin-bottom: 30px; border-bottom: 1px solid #ddd; padding-bottom: 10px; }
-.content-block { margin-bottom: 25px; }
-.content-block h3 { color: #b71c1c; margin-bottom: 8px; }
-.project-list { margin-left: 20px; line-height: 1.8; }
-
-/* Hobbies */
-.filter-buttons { margin-bottom: 20px; }
-.filter-buttons button {
-    background: #eee; border: 1px solid #ddd; padding: 6px 12px;
-    border-radius: 20px; cursor: pointer; margin-right: 5px; transition: 0.3s;
-}
-.filter-buttons button.active, .filter-buttons button:hover { background: #111; color: #fff; }
-
+/* GALLERY & SKILLS */
+.filter-buttons { margin-bottom: 15px; }
+.filter-buttons button { background: #eee; border: none; padding: 5px 10px; border-radius: 15px; cursor: pointer; margin-right: 5px; }
+.filter-buttons button.active { background: #2b1055; color: #fff; }
 .gallery { display: flex; flex-wrap: wrap; gap: 10px; }
-.gallery-item { width: 100px; height: 140px; overflow: hidden; border-radius: 6px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); }
-.gallery-item img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.3s; }
-.gallery-item img:hover { transform: scale(1.1); }
+.gallery-item { width: 80px; height: 110px; object-fit: cover; border-radius: 4px; transition: 0.3s; }
+.gallery-item:hover { transform: scale(1.1); }
+.skill-list { display: flex; flex-wrap: wrap; gap: 15px; }
+.skill-list img { width: 50px; height: 50px; object-fit: contain; }
+.soft-skills span { display: inline-block; background: #eee; padding: 6px 12px; border-radius: 15px; margin: 5px 5px 0 0; font-weight: 600;}
 
-/* Skills */
-.skill-list { display: flex; flex-wrap: wrap; gap: 20px; }
-.skill-icon { width: 60px; height: 60px; object-fit: contain; }
-.soft-skills { gap: 10px; }
-.soft-skill { background: #eee; padding: 8px 16px; border-radius: 20px; font-weight: 600; border: 1px solid #ddd; }
-
-/* Contact Form */
-.contact-form { display: flex; flex-direction: column; gap: 15px; margin-bottom: 30px; }
-.contact-form input, .contact-form textarea {
-    padding: 12px; border: 1px solid #ccc; border-radius: 4px; font-family: inherit; background: #fff;
-}
-.contact-form button {
-    background: #b71c1c; color: white; border: none; padding: 12px; border-radius: 4px;
-    font-weight: bold; cursor: pointer; transition: 0.3s;
-}
-.contact-form button:hover { background: #8e1515; }
-.book-links a { color: #b71c1c; text-decoration: none; }
-.book-links a:hover { text-decoration: underline; }
-
-/* MOBILE RESPONSIVENESS (Stacks like a normal page so it doesn't break) */
-@media (max-width: 800px) {
-    .book-container { flex-direction: column; height: auto; }
-    .book-container::after { display: none; } /* Hide spine */
-    .left-page { border-right: none; border-bottom: 2px dashed #ccc; padding: 30px 20px; }
-    .right-page { padding: 30px 20px; perspective: none; }
-    .flipping-page { position: relative; transform: none; opacity: 1; display: none; padding: 0; }
-    .flipping-page.active { display: block; transform: none; }
-}
+/* FORM */
+.contact-form { display: flex; flex-direction: column; gap: 15px; }
+.contact-form input, .contact-form textarea { padding: 10px; border: 1px solid #ccc; border-radius: 4px; font-family: inherit; }
+.contact-form button { background: #b71c1c; color: #fff; border: none; padding: 12px; border-radius: 4px; cursor: pointer; font-weight: bold; }
+.social-links a { color: #b71c1c; text-decoration: none; }

@@ -3,55 +3,57 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Raphael League | Reactive Book Portfolio</title>
+    <title>Raphael League | 3D Book Profile</title>
     <link rel="stylesheet" href="style/style.css">
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Source+Sans+Pro:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
-    
-    <div class="desk-environment">
-        <div class="book-container">
+
+    <div class="desk">
+        <div class="book" id="book">
             
-            <div class="book-page left-page">
-                <div class="page-content">
-                    <img src="https://i.postimg.cc/L5x5WMF6/SONY6273.jpg" alt="Raphael League Profile" class="profile-img">
-                    <h1>Raphael League</h1>
-                    <h2 class="studentschool">IT Student @ Asia Pacific College</h2>
-                    <p class="bio">What's up! I'm Gab. I hate coding but I love to do SQL and research.</p>
-                    
-                    <nav class="table-of-contents">
-                        <h3>Table of Contents</h3>
-                        <ul>
-                            <li><button class="nav-btn active" data-target="edbackground">I. Background & Projects</button></li>
-                            <li><button class="nav-btn" data-target="hobby">II. Hobbies</button></li>
-                            <li><button class="nav-btn" data-target="skills">III. Technical & Soft Skills</button></li>
-                            <li><button class="nav-btn" data-target="contact">IV. Contact Me</button></li>
-                        </ul>
-                    </nav>
+            <div class="page" id="p1">
+                <div class="front cover">
+                    <div class="cover-content">
+                        <h1>Raphael League's Profile</h1>
+                        <p>IT Student & Researcher</p>
+                        <button class="next-btn open-book-btn">Open Book <i class="fas fa-arrow-right"></i></button>
+                    </div>
+                </div>
+                <div class="back page-content">
+                    <img src="https://i.postimg.cc/L5x5WMF6/SONY6273.jpg" alt="Raphael League" class="profile-img">
+                    <h2>Raphael Gabriel League</h2>
+                    <h3 class="studentschool">IT Student @ Asia Pacific College</h3>
+                    <p>What's up! I'm Gab, I hate coding but I love to do SQL and do research.</p>
+                    <div class="page-footer">
+                        <button class="prev-btn"><i class="fas fa-arrow-left"></i> Close</button>
+                    </div>
                 </div>
             </div>
 
-            <div class="book-page right-page">
-                
-                <div class="page-content flipping-page active" id="edbackground">
-                    <h2 class="section-title">Background & Projects</h2>
-                    <div class="content-block">
+            <div class="page" id="p2">
+                <div class="front page-content">
+                    <h2>Background & Projects</h2>
+                    <div class="info-block">
                         <h3>Educational Background</h3>
                         <p><strong>STEM</strong><br>June 2022 - April 2024 (Asia Pacific College)</p>
                         <p><strong>BS Information Technology</strong><br>2024 - 2028 (Asia Pacific College)</p>
                     </div>
-                    <div class="content-block">
+                    <div class="info-block">
                         <h3>Projects</h3>
-                        <ul class="project-list">
-                            <li><strong>RamBus:</strong> Developer & Researcher</li>
-                            <li><strong>Smoke & Fire Detector:</strong> Prototype Developer & Researcher</li>
+                        <ul>
+                            <li><strong>RamBus:</strong> Developer and Researcher</li>
+                            <li><strong>Smoke & Fire Detector:</strong> Developer and Researcher</li>
                         </ul>
                     </div>
+                    <div class="page-footer">
+                        <button class="next-btn">Next Page <i class="fas fa-arrow-right"></i></button>
+                    </div>
                 </div>
-
-                <div class="page-content flipping-page" id="hobby">
-                    <h2 class="section-title">Hobbies</h2>
+                <div class="back page-content">
+                    <h2>Hobbies</h2>
                     <div class="filter-buttons">
                         <button data-filter="all" class="active">All</button>
                         <button data-filter="reading">Reading</button>
@@ -59,59 +61,40 @@
                         <button data-filter="music">Music</button>
                     </div>
                     <div class="gallery">
-                        <div class="gallery-item" data-category="reading">
-                            <img src="https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1759623080i/28705056.jpg" alt="TBATE">
-                        </div>
-                        <div class="gallery-item" data-category="reading">
-                            <img src="https://i5.walmartimages.com/seo/Dante-s-Inferno-The-Divine-Comedy-Book-One-Paperback-9781434444745_4baa4dbe-24f8-4298-9fa4-30d85dd6d3ce.b162e863409f0d89f6a7ecae3315b229.jpeg" alt="Dante's Inferno">
-                        </div>
-                        <div class="gallery-item" data-category="reading">
-                            <img src="https://images.cdn3.buscalibre.com/fit-in/360x360/99/4a/994ab3ebd7dec6cd78ae8689d4e7861a.jpg" alt="Sakamoto Days">
-                        </div>
-                        <div class="gallery-item" data-category="gaming">
-                            <img src="https://images.seeklogo.com/logo-png/37/2/valorant-logo-png_seeklogo-379976.png" alt="Valorant">
-                        </div>
-                        <div class="gallery-item" data-category="gaming">
-                            <img src="https://images.seeklogo.com/logo-png/43/1/league-of-legends-wild-rift-logo-png_seeklogo-430791.png" alt="Wild Rift">
-                        </div>
-                        <div class="gallery-item" data-category="gaming">
-                            <img src="https://img.playstationtrophies.org/images/2025/08/29/icon/31f7655397589bb36a341c2d8454864d-l.png" alt="NBA 2K">
-                        </div>
-                        <div class="gallery-item" data-category="music">
-                            <img src="https://upload.wikimedia.org/wikipedia/en/b/b9/Freudian_by_Daniel_Caesar.jpg" alt="Daniel Caesar">
-                        </div>
-                        <div class="gallery-item" data-category="music">
-                            <img src="https://upload.wikimedia.org/wikipedia/en/e/eb/Bruno_Mars_-_Doo-Wops_%26_Hooligans.png" alt="Bruno Mars">
-                        </div>
-                        <div class="gallery-item" data-category="music">
-                            <img src="https://upload.wikimedia.org/wikipedia/en/5/53/Maroon_5_-_V_%28Official_Album_Cover%29.png" alt="Maroon 5">
-                        </div>
+                        <img src="https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1759623080i/28705056.jpg" data-category="reading" class="gallery-item">
+                        <img src="https://i5.walmartimages.com/seo/Dante-s-Inferno-The-Divine-Comedy-Book-One-Paperback-9781434444745_4baa4dbe-24f8-4298-9fa4-30d85dd6d3ce.b162e863409f0d89f6a7ecae3315b229.jpeg" data-category="reading" class="gallery-item">
+                        <img src="https://images.seeklogo.com/logo-png/37/2/valorant-logo-png_seeklogo-379976.png" data-category="gaming" class="gallery-item">
+                        <img src="https://img.playstationtrophies.org/images/2025/08/29/icon/31f7655397589bb36a341c2d8454864d-l.png" data-category="gaming" class="gallery-item">
+                        <img src="https://upload.wikimedia.org/wikipedia/en/b/b9/Freudian_by_Daniel_Caesar.jpg" data-category="music" class="gallery-item">
+                        <img src="https://upload.wikimedia.org/wikipedia/en/e/eb/Bruno_Mars_-_Doo-Wops_%26_Hooligans.png" data-category="music" class="gallery-item">
+                    </div>
+                    <div class="page-footer">
+                        <button class="prev-btn"><i class="fas fa-arrow-left"></i> Prev</button>
                     </div>
                 </div>
+            </div>
 
-                <div class="page-content flipping-page" id="skills">
-                    <h2 class="section-title">Technical Skills</h2>
+            <div class="page" id="p3">
+                <div class="front page-content">
+                    <h2>Technical Skills</h2>
                     <div class="skill-list">
-                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/61/HTML5_logo_and_wordmark.svg/500px-HTML5_logo_and_wordmark.svg.png" alt="HTML" class="skill-icon">
-                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d5/CSS3_logo_and_wordmark.svg/1452px-CSS3_logo_and_wordmark.svg.png" alt="CSS" class="skill-icon">
-                        <img src="https://1000logos.net/wp-content/uploads/2020/09/JavaScript-Logo.png" alt="JavaScript" class="skill-icon">
-                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSkBKGzgKHQA42GTo40DCQUnNVkUWd3FMzFJA&s" alt="Python" class="skill-icon">
-                        <img src="https://p1.hiclipart.com/preview/415/298/342/sql-server-logo-mysql-database-microsoft-sql-server-php-text-line-company-png-clipart.jpg" alt="SQL" class="skill-icon">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/61/HTML5_logo_and_wordmark.svg/500px-HTML5_logo_and_wordmark.svg.png" alt="HTML">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d5/CSS3_logo_and_wordmark.svg/1452px-CSS3_logo_and_wordmark.svg.png" alt="CSS">
+                        <img src="https://1000logos.net/wp-content/uploads/2020/09/JavaScript-Logo.png" alt="JavaScript">
+                        <img src="https://p1.hiclipart.com/preview/415/298/342/sql-server-logo-mysql-database-microsoft-sql-server-php-text-line-company-png-clipart.jpg" alt="SQL">
                     </div>
-
-                    <h2 class="section-title" style="margin-top: 40px;">Soft Skills</h2>
-                    <div class="skill-list soft-skills">
-                        <span class="soft-skill">Teamwork</span>
-                        <span class="soft-skill">Leadership</span>
-                        <span class="soft-skill">Adaptability</span>
-                        <span class="soft-skill">Strategic Thinking</span>
-                        <span class="soft-skill">Empathy</span>
-                    </div>  
+                    <h2 style="margin-top: 30px;">Soft Skills</h2>
+                    <div class="soft-skills">
+                        <span>Teamwork</span>
+                        <span>Leadership</span>
+                        <span>Adaptability</span>
+                    </div>
+                    <div class="page-footer">
+                        <button class="next-btn">Next Page <i class="fas fa-arrow-right"></i></button>
+                    </div>
                 </div>
-
-                <div class="page-content flipping-page" id="contact">
-                    <h2 class="section-title">Send a Message</h2>
-                    
+                <div class="back page-content">
+                    <h2>Send a Message</h2>
                     <form id="contactForm" class="contact-form">
                         <input type="text" id="senderName" placeholder="Your Name" required>
                         <input type="email" id="senderEmail" placeholder="Your Email" required>
@@ -119,15 +102,28 @@
                         <button type="submit" id="submitBtn">Send to Database</button>
                         <p id="formStatus"></p>
                     </form>
-
-                    <div class="social-links book-links">
-                        <p><strong>Email:</strong> <a href="mailto:raphaelgabriel.league@gmail.com">raphaelgabriel.league@gmail.com</a></p>
-                        <p><strong>LinkedIn:</strong> <a href="https://www.linkedin.com/in/raphael-league-445167256/">raphael-league</a></p>
-                        <p><strong>GitHub:</strong> <a href="https://github.com/RaphaelLeague">RaphaelLeague</a></p>
+                    <div class="page-footer">
+                        <button class="prev-btn"><i class="fas fa-arrow-left"></i> Prev</button>
                     </div>
                 </div>
-
             </div>
+
+            <div class="page" id="p4">
+                <div class="front page-content">
+                    <h2>Thanks for reading!</h2>
+                    <div class="social-links">
+                        <p><strong>Email:</strong><br> raphaelgabriel.league@gmail.com</p>
+                        <p><strong>LinkedIn:</strong><br> <a href="https://www.linkedin.com/in/raphael-league-445167256/">linkedin.com/in/raphael-league</a></p>
+                        <p><strong>GitHub:</strong><br> <a href="https://github.com/RaphaelLeague">github.com/RaphaelLeague</a></p>
+                    </div>
+                    <div class="page-footer">
+                        <button class="next-btn">Close Book <i class="fas fa-arrow-right"></i></button>
+                    </div>
+                </div>
+                <div class="back cover">
+                    </div>
+            </div>
+
         </div>
     </div>
 

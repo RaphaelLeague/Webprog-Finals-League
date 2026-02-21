@@ -1,35 +1,71 @@
 document.addEventListener('DOMContentLoaded', () => {
+
+    // ==========================================
+    // 1. 3D BOOK FLIPPING LOGIC
+    // ==========================================
+    const book = document.getElementById("book");
+    const pages = document.querySelectorAll(".page");
+    const nextBtns = document.querySelectorAll(".next-btn");
+    const prevBtns = document.querySelectorAll(".prev-btn");
     
-    // =========================================
-    // 1. BOOK PAGE TURNING LOGIC
-    // =========================================
-    const navButtons = document.querySelectorAll('.nav-btn');
-    const pages = document.querySelectorAll('.flipping-page');
+    let currentLocation = 1;
+    let numOfPages = pages.length;
+    let maxLocation = numOfPages + 1;
 
-    navButtons.forEach(btn => {
-        btn.addEventListener('click', () => {
-            // 1. Remove active class from all buttons
-            navButtons.forEach(b => b.classList.remove('active'));
-            // 2. Add active class to clicked button
-            btn.classList.add('active');
-
-            // 3. Find the target page
-            const targetId = btn.getAttribute('data-target');
-            
-            // 4. Flip out current pages, flip in the new page
-            pages.forEach(page => {
-                if (page.id === targetId) {
-                    page.classList.add('active'); // Rotates in
-                } else {
-                    page.classList.remove('active'); // Rotates out
-                }
-            });
-        });
+    // Initialize Z-indexes so Page 1 is on top, Page 2 is below it, etc.
+    pages.forEach((page, index) => {
+        page.style.zIndex = numOfPages - index;
     });
 
-    // =========================================
+    function goNextPage() {
+        if(currentLocation < maxLocation) {
+            // If opening the cover, shift book to center
+            if(currentLocation === 1) {
+                book.style.transform = "translateX(0)"; 
+            }
+            
+            // Flip the page and set its z-index so it stacks correctly on the left
+            const currentPage = pages[currentLocation - 1];
+            currentPage.classList.add("flipped");
+            currentPage.style.zIndex = currentLocation;
+            
+            // If closing the back cover, shift book to the left
+            if(currentLocation === numOfPages) {
+                book.style.transform = "translateX(-200px)"; 
+            }
+            currentLocation++;
+        }
+    }
+
+    function goPrevPage() {
+        if(currentLocation > 1) {
+            let prevLocation = currentLocation - 1;
+            
+            // If opening from the back cover, shift book to center
+            if(prevLocation === numOfPages) {
+                book.style.transform = "translateX(0)"; 
+            }
+            
+            // Un-flip the page and restore its right-side z-index
+            const prevPage = pages[prevLocation - 1];
+            prevPage.classList.remove("flipped");
+            prevPage.style.zIndex = maxLocation - prevLocation;
+            
+            // If closing the front cover, shift book back to the right
+            if(prevLocation === 1) {
+                book.style.transform = "translateX(200px)"; 
+            }
+            currentLocation--;
+        }
+    }
+
+    // Attach click events
+    nextBtns.forEach(btn => btn.addEventListener('click', goNextPage));
+    prevBtns.forEach(btn => btn.addEventListener('click', goPrevPage));
+
+    // ==========================================
     // 2. HOBBY FILTERING LOGIC
-    // =========================================
+    // ==========================================
     const filterButtons = document.querySelectorAll('.filter-buttons button');
     const galleryItems = document.querySelectorAll('.gallery-item');
 
@@ -48,10 +84,10 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // =========================================
+    // ==========================================
     // 3. SUPABASE CONTACT FORM LOGIC
-    // =========================================
-    // TODO: Paste your URL and Key back in here before pushing!
+    // ==========================================
+    // TODO: Paste your URL and Key back in here!
     const supabaseUrl = 'YOUR_SUPABASE_URL'; 
     const supabaseKey = 'YOUR_SUPABASE_ANON_KEY'; 
     
@@ -64,7 +100,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (contactForm) {
             contactForm.addEventListener('submit', async (e) => {
                 e.preventDefault(); 
-                submitBtn.textContent = 'Sending to DB...';
+                submitBtn.textContent = 'Sending...';
                 submitBtn.disabled = true;
                 formStatus.textContent = '';
 
@@ -81,7 +117,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     formStatus.textContent = 'Database error. Please try again.';
                     formStatus.style.color = '#b71c1c'; 
                 } else {
-                    formStatus.textContent = 'Message securely saved to database!';
+                    formStatus.textContent = 'Message securely saved!';
                     formStatus.style.color = '#2e7d32'; 
                     contactForm.reset(); 
                 }
@@ -90,7 +126,5 @@ document.addEventListener('DOMContentLoaded', () => {
                 submitBtn.disabled = false;
             });
         }
-    } else {
-        console.error("Supabase failed to load.");
     }
 });
