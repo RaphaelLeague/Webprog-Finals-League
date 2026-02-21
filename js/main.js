@@ -31,10 +31,10 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    function goPrevPage(event) {
+    function goPrevPage(e) {
         if (currentLocation > 1) {
-            // Close Book reset logic
-            if (currentLocation > numOfPages && event.target.innerText.includes("Close Book")) {
+            // FIX: Handle "Close Book" reset logic
+            if (currentLocation > numOfPages && e.target.innerText.includes("Close Book")) {
                 resetBook();
                 return;
             }
