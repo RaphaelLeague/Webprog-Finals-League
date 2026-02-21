@@ -24,8 +24,10 @@ document.addEventListener('DOMContentLoaded', () => {
             const page = pages[currentLocation - 1];
             page.classList.add("flipped");
             
+            // Slide right to center the open book
             if (currentLocation === 1) book.style.transform = "translateX(0)";
-            if (currentLocation === numOfPages) book.style.transform = "translateX(-200px)";
+            // Slide right again to center the back cover when fully finished
+            if (currentLocation === numOfPages) book.style.transform = "translateX(200px)";
             
             currentLocation++;
             setTimeout(updateZIndex, 600);
@@ -38,7 +40,9 @@ document.addEventListener('DOMContentLoaded', () => {
             const page = pages[currentLocation - 1];
             page.classList.remove("flipped");
 
-            if (currentLocation === 1) book.style.transform = "translateX(200px)";
+            // Slide left to re-center the front cover
+            if (currentLocation === 1) book.style.transform = "translateX(-200px)";
+            // Slide left to re-center the open book from the back cover
             if (currentLocation === numOfPages) book.style.transform = "translateX(0)";
             
             setTimeout(updateZIndex, 600);
@@ -46,7 +50,8 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function resetBook() {
-        book.style.transform = "translateX(200px)";
+        // Reset to the original centered front cover
+        book.style.transform = "translateX(-200px)";
         pages.forEach(page => page.classList.remove("flipped"));
         currentLocation = 1;
         setTimeout(updateZIndex, 600);
