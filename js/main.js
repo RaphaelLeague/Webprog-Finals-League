@@ -1,5 +1,4 @@
 document.addEventListener('DOMContentLoaded', () => {
-
     const book = document.getElementById("book");
     const pages = document.querySelectorAll(".page");
     const nextBtns = document.querySelectorAll(".next-btn");
@@ -9,6 +8,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let numOfPages = pages.length;
     let maxLocation = numOfPages + 1;
 
+    // Initial z-index stacking
     pages.forEach((page, index) => {
         page.style.zIndex = numOfPages - index;
     });
@@ -18,7 +18,6 @@ document.addEventListener('DOMContentLoaded', () => {
             if(currentLocation === 1) {
                 book.style.transform = "translateX(0)"; 
             }
-            
             const currentPage = pages[currentLocation - 1];
             currentPage.classList.add("flipped");
             currentPage.style.zIndex = currentLocation;
@@ -33,11 +32,9 @@ document.addEventListener('DOMContentLoaded', () => {
     function goPrevPage() {
         if(currentLocation > 1) {
             let prevLocation = currentLocation - 1;
-            
             if(prevLocation === numOfPages) {
                 book.style.transform = "translateX(0)"; 
             }
-            
             const prevPage = pages[prevLocation - 1];
             prevPage.classList.remove("flipped");
             prevPage.style.zIndex = maxLocation - prevLocation;
@@ -52,12 +49,13 @@ document.addEventListener('DOMContentLoaded', () => {
     nextBtns.forEach(btn => btn.addEventListener('click', goNextPage));
     prevBtns.forEach(btn => btn.addEventListener('click', goPrevPage));
 
-    // TODO: Paste your URL and Key back in here!
-    const supabaseUrl = 'YOUR_SUPABASE_URL'; 
-    const supabaseKey = 'YOUR_SUPABASE_ANON_KEY'; 
+    // Supabase Setup
+    const supabaseUrl = 'https://safdltefbgdidkrwnjyf.supabase.co';
+    const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNhZmRsdGVmYmdkaWRrcnduanlmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzE2NzgxMjIsImV4cCI6MjA4NzI1NDEyMn0._Ya4kMNQ0FIcQ36tvUJE1LTzqTsqqnNAr9w34lBf8y0';
     
+    // Check if supabase is defined (from CDN)
     if (typeof supabase !== 'undefined') {
-        const supabaseClient = supabase.createClient(supabaseUrl, supabaseKey);
+        const _supabase = supabase.createClient(supabaseUrl, supabaseKey);
         const contactForm = document.getElementById('contactForm');
         const formStatus = document.getElementById('formStatus');
         const submitBtn = document.getElementById('submitBtn');
@@ -67,15 +65,14 @@ document.addEventListener('DOMContentLoaded', () => {
                 e.preventDefault(); 
                 submitBtn.textContent = 'Sending...';
                 submitBtn.disabled = true;
-                formStatus.textContent = '';
 
                 const name = document.getElementById('senderName').value;
                 const email = document.getElementById('senderEmail').value;
                 const message = document.getElementById('senderMessage').value;
 
-                const { error } = await supabaseClient
+                const { error } = await _supabase
                     .from('messages')
-                    .insert([{ name: name, email: email, message: message }]);
+                    .insert([{ name, email, message }]);
 
                 if (error) {
                     console.error('Error:', error);
