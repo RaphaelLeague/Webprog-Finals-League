@@ -25,19 +25,23 @@ h1, h2, h3 { font-family: 'Playfair Display', serif; color: #2c3e50; }
     border-radius: 4px 15px 15px 4px;
 }
 
+/* THE FIX: Hard-locking pages to the top of the book */
 .page {
     width: 50%;
     height: 100%;
     position: absolute;
     right: 0;
-    top: 0; /* THIS STOPS PAGES FROM DROPPING DOWN */
+    top: 0;  /* Prevents the trapdoor effect */
     transform-style: preserve-3d;
     transform-origin: left center;
     transition: transform 0.8s cubic-bezier(0.645, 0.045, 0.355, 1);
 }
 
+/* THE FIX: Hard-locking the paper directly to the page boundaries */
 .front, .back {
     position: absolute;
+    top: 0;   /* Double protection against shifting */
+    left: 0;  /* Double protection against shifting */
     width: 100%;
     height: 100%;
     backface-visibility: hidden;
@@ -106,7 +110,6 @@ h1, h2, h3 { font-family: 'Playfair Display', serif; color: #2c3e50; }
 .page-content::-webkit-scrollbar { width: 5px; }
 .page-content::-webkit-scrollbar-thumb { background: #dcd6c8; border-radius: 4px; }
 
-/* GLOBAL IMAGE LOCK */
 .page-content img { max-width: 100%; height: auto; }
 
 .profile-img { 
@@ -146,7 +149,6 @@ h3 { color: #555; font-size: 1.1rem; margin-bottom: 5px;}
 .hobby-category h3 i { color: #d4af37; margin-right: 5px; }
 .hobby-items { display: flex; gap: 10px; flex-wrap: wrap; }
 
-/* FORCED HOBBY IMAGE SIZES */
 .hobby-items img {
     width: 60px !important; 
     height: 85px !important; 
@@ -159,7 +161,6 @@ h3 { color: #555; font-size: 1.1rem; margin-bottom: 5px;}
 
 .skill-list { display: flex; flex-wrap: wrap; gap: 20px; margin-top: 10px;}
 
-/* FORCED SKILL IMAGE SIZES */
 .skill-list img { 
     width: 60px !important; 
     height: 60px !important; 
