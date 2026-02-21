@@ -7,22 +7,20 @@ document.addEventListener('DOMContentLoaded', () => {
     let currentLocation = 1;
     let numOfPages = pages.length;
 
-    // Set initial stack z-index
-    pages.forEach((page, index) => { 
-        page.style.zIndex = numOfPages - index; 
-    });
+    // Initial Stack
+    function setInitialStack() {
+        pages.forEach((page, index) => { 
+            page.style.zIndex = numOfPages - index; 
+        });
+    }
+    setInitialStack();
 
     function goNextPage() {
         if (currentLocation <= numOfPages) {
             const page = pages[currentLocation - 1];
             page.classList.add("flipped");
+            setTimeout(() => { page.style.zIndex = currentLocation; }, 600);
             
-            // Adjust z-index during animation for smoothness
-            setTimeout(() => { 
-                page.style.zIndex = currentLocation; 
-            }, 600);
-            
-            // Book shifts left when opened, further left when reaching end
             if (currentLocation === 1) book.style.transform = "translateX(0)";
             if (currentLocation === numOfPages) book.style.transform = "translateX(-200px)";
             
@@ -31,19 +29,22 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function goPrevPage() {
-        if (currentLocation > 1) {
+        // RESET LOGIC: If we are past the last page, loop to front
+        if (currentLocation > numOfPages) {
+            book.style.transform = "translateX(200px)";
+            pages.forEach((page, index) => {
+                page.classList.remove("flipped");
+                setTimeout(() => { page.style.zIndex = numOfPages - index; }, 600);
+            });
+            currentLocation = 1;
+        } 
+        // Normal Prev Logic
+        else if (currentLocation > 1) {
             const page = pages[currentLocation - 2];
             page.classList.remove("flipped");
+            setTimeout(() => { page.style.zIndex = (numOfPages - currentLocation) + 2; }, 600);
             
-            // Revert z-index during flip back
-            setTimeout(() => { 
-                page.style.zIndex = (numOfPages - currentLocation) + 2; 
-            }, 600);
-            
-            // Shift book back into center or right cover position
             if (currentLocation === 2) book.style.transform = "translateX(200px)";
-            if (currentLocation === numOfPages + 1) book.style.transform = "translateX(0)";
-            
             currentLocation--;
         }
     }
@@ -52,24 +53,18 @@ document.addEventListener('DOMContentLoaded', () => {
     prevBtns.forEach(btn => btn.addEventListener("click", goPrevPage));
 
     // Supabase
-    const supabaseUrl = 'https://safdltefbgdidkrwnjyf.supabase.co';
-    const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNhZmRsdGVmYmdkaWRrcnduanlmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzE2NzgxMjIsImV4cCI6MjA4NzI1NDEyMn0._Ya4kMNQ0FIcQ36tvUJE1LTzqTsqqnNAr9w34lBf8y0';
+    const _supabase = supabase.createClient('https://safdltefbgdidkrwnjyf.supabase.co', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNhZmRsdGVmYmdkaWRrcnduanlmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzE2NzgxMjIsImV4cCI6MjA4NzI1NDEyMn0._Ya4kMNQ0FIcQ36tvUJE1LTzqTsqqnNAr9w34lBf8y0');
     
-    if (typeof supabase !== 'undefined') {
-        const _supabase = supabase.createClient(supabaseUrl, supabaseKey);
-        const contactForm = document.getElementById('contactForm');
-        contactForm?.addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const btn = document.getElementById('submitBtn');
-            btn.disabled = true;
-            const { error } = await _supabase.from('messages').insert([{
-                name: document.getElementById('senderName').value,
-                email: document.getElementById('senderEmail').value,
-                message: document.getElementById('senderMessage').value
-            }]);
-            document.getElementById('formStatus').textContent = error ? "Error!" : "Message Saved!";
-            if (!error) contactForm.reset();
-            btn.disabled = false;
-        });
-    }
+    document.getElementById('contactForm')?.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const btn = document.getElementById('submitBtn');
+        btn.disabled = true;
+        const { error } = await _supabase.from('messages').insert([{
+            name: document.getElementById('senderName').value,
+            email: document.getElementById('senderEmail').value,
+            message: document.getElementById('senderMessage').value
+        }]);
+        document.getElementById('formStatus').textContent = error ? "Error!" : "Message Saved!";
+        btn.disabled = false;
+    });
 });

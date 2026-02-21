@@ -19,7 +19,6 @@ h1, h2, h3 { font-family: 'Playfair Display', serif; color: #2c3e50; }
     width: 800px;
     height: 550px;
     position: relative;
-    /* Smooth transition for the book shifting left/right */
     transition: transform 1.2s cubic-bezier(0.645, 0.045, 0.355, 1);
     transform: translateX(200px); 
     box-shadow: 0 30px 60px rgba(0,0,0,0.5);
@@ -30,7 +29,7 @@ h1, h2, h3 { font-family: 'Playfair Display', serif; color: #2c3e50; }
     height: 100%;
     position: absolute;
     right: 0;
-    top: 0; /* FIX: Prevents falling/stiffness */
+    top: 0;
     transform-style: preserve-3d;
     transform-origin: left center;
     transition: transform 1.2s cubic-bezier(0.645, 0.045, 0.355, 1);
@@ -47,7 +46,7 @@ h1, h2, h3 { font-family: 'Playfair Display', serif; color: #2c3e50; }
     overflow: hidden;
 }
 
-/* SHADOW EFFECT */
+/* SHADOWS DURING FLIP */
 .front::before, .back::before {
     content: '';
     position: absolute;
@@ -81,4 +80,3 @@ h1, h2, h3 { font-family: 'Playfair Display', serif; color: #2c3e50; }
 .contact-form { display: flex; flex-direction: column; gap: 10px; }
 .contact-form input, .contact-form textarea { padding: 10px; border: 1px solid #ddd; background: #faf8f2; }
 .contact-form button { background: #2c3e50; color: white; padding: 12px; border: none; cursor: pointer; }
-.social-links a { color: #a9914d; text-decoration: none; font-weight: 600; }
