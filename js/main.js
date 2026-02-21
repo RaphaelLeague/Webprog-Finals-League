@@ -1,8 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
 
-    // ==========================================
-    // 1. 3D BOOK FLIPPING LOGIC
-    // ==========================================
     const book = document.getElementById("book");
     const pages = document.querySelectorAll(".page");
     const nextBtns = document.querySelectorAll(".next-btn");
@@ -55,9 +52,7 @@ document.addEventListener('DOMContentLoaded', () => {
     nextBtns.forEach(btn => btn.addEventListener('click', goNextPage));
     prevBtns.forEach(btn => btn.addEventListener('click', goPrevPage));
 
-    // ==========================================
-    // 2. SUPABASE CONTACT FORM LOGIC
-    // ==========================================
+    // TODO: Paste your URL and Key back in here!
     const supabaseUrl = 'YOUR_SUPABASE_URL'; 
     const supabaseKey = 'YOUR_SUPABASE_ANON_KEY'; 
     
