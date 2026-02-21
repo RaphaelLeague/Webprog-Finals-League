@@ -73,7 +73,18 @@ h1, h2, h3 { font-family: 'Playfair Display', serif; color: #111; }
 }
 
 .cover h1 { color: #ffdd59; margin-bottom: 10px; }
-.cover .open-book-btn { margin-top: 30px; background: #ffdd59; color: #000; padding: 12px 24px; border: none; font-weight: bold; border-radius: 20px; cursor: pointer; }
+.cover .open-book-btn { 
+    margin-top: 30px; 
+    background: #ffdd59; 
+    color: #000; 
+    padding: 12px 24px; 
+    border: none; 
+    font-weight: bold; 
+    border-radius: 20px; 
+    cursor: pointer; 
+    transition: transform 0.2s;
+}
+.cover .open-book-btn:hover { transform: scale(1.05); }
 
 /* PAGE CONTENT & SCROLLING */
 .page-content {
@@ -105,17 +116,28 @@ h2 { border-bottom: 2px solid #ddd; padding-bottom: 10px; margin-bottom: 20px; }
 
 /* GALLERY & SKILLS */
 .filter-buttons { margin-bottom: 15px; }
-.filter-buttons button { background: #eee; border: none; padding: 5px 10px; border-radius: 15px; cursor: pointer; margin-right: 5px; }
+.filter-buttons button { background: #eee; border: none; padding: 5px 10px; border-radius: 15px; cursor: pointer; margin-right: 5px; transition: background 0.2s;}
 .filter-buttons button.active { background: #2b1055; color: #fff; }
 .gallery { display: flex; flex-wrap: wrap; gap: 10px; }
 .gallery-item { width: 80px; height: 110px; object-fit: cover; border-radius: 4px; transition: 0.3s; }
 .gallery-item:hover { transform: scale(1.1); }
-.skill-list { display: flex; flex-wrap: wrap; gap: 15px; }
-.skill-list img { width: 50px; height: 50px; object-fit: contain; }
+
+/* Updated Skill List with sizing fix and hover effect */
+.skill-list { display: flex; flex-wrap: wrap; gap: 20px; }
+.skill-list img { 
+    width: 70px; 
+    height: 70px; 
+    object-fit: contain; 
+    transition: transform 0.2s ease;
+}
+.skill-list img:hover { transform: translateY(-5px); }
+
 .soft-skills span { display: inline-block; background: #eee; padding: 6px 12px; border-radius: 15px; margin: 5px 5px 0 0; font-weight: 600;}
 
 /* FORM */
 .contact-form { display: flex; flex-direction: column; gap: 15px; }
 .contact-form input, .contact-form textarea { padding: 10px; border: 1px solid #ccc; border-radius: 4px; font-family: inherit; }
-.contact-form button { background: #b71c1c; color: #fff; border: none; padding: 12px; border-radius: 4px; cursor: pointer; font-weight: bold; }
-.social-links a { color: #b71c1c; text-decoration: none; }
+.contact-form button { background: #b71c1c; color: #fff; border: none; padding: 12px; border-radius: 4px; cursor: pointer; font-weight: bold; transition: background 0.2s; }
+.contact-form button:hover { background: #8e1515; }
+.social-links a { color: #b71c1c; text-decoration: none; font-weight: 600; }
+.social-links a:hover { text-decoration: underline; }

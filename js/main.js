@@ -88,8 +88,8 @@ document.addEventListener('DOMContentLoaded', () => {
     // 3. SUPABASE CONTACT FORM LOGIC
     // ==========================================
     // TODO: Paste your URL and Key back in here!
-    const supabaseUrl = 'YOUR_SUPABASE_URL'; 
-    const supabaseKey = 'YOUR_SUPABASE_ANON_KEY'; 
+    const supabaseUrl = 'https://safdltefbgdidkrwnjyf.supabase.co';
+    const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNhZmRsdGVmYmdkaWRrcnduanlmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzE2NzgxMjIsImV4cCI6MjA4NzI1NDEyMn0._Ya4kMNQ0FIcQ36tvUJE1LTzqTsqqnNAr9w34lBf8y0'; 
     
     if (typeof supabase !== 'undefined') {
         const supabaseClient = supabase.createClient(supabaseUrl, supabaseKey);
