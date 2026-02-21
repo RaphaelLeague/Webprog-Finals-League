@@ -1,9 +1,10 @@
 * { margin: 0; padding: 0; box-sizing: border-box; }
 
 body {
-    background: #222; /* Dark desk */
+    /* Upgraded desk to a moody, cinematic slate gradient */
+    background: radial-gradient(circle at center, #3a3a42, #111114);
     font-family: 'Source Sans Pro', sans-serif;
-    color: #333;
+    color: #444;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -11,133 +12,219 @@ body {
     overflow: hidden;
 }
 
-h1, h2, h3 { font-family: 'Playfair Display', serif; color: #111; }
+h1, h2, h3 { font-family: 'Playfair Display', serif; color: #2c3e50; }
 
-.desk {
-    perspective: 1500px; /* Gives the 3D depth */
-}
+.desk { perspective: 1500px; }
 
 /* THE BOOK */
 .book {
-    width: 800px; /* Full open width */
+    width: 800px;
     height: 550px;
     position: relative;
     transition: transform 0.8s ease;
-    /* Starts shifted right because only the right cover is visible */
     transform: translateX(200px); 
+    /* Adds realistic shadow underneath the whole book */
+    box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+    border-radius: 4px 15px 15px 4px;
 }
 
 /* THE PAGES */
 .page {
-    width: 50%; /* 400px wide */
+    width: 50%;
     height: 100%;
     position: absolute;
-    right: 0; /* All pages stack on the right initially */
+    right: 0;
     transform-style: preserve-3d;
-    transform-origin: left center; /* Hinges on the left side (the spine) */
+    transform-origin: left center;
     transition: transform 0.8s cubic-bezier(0.645, 0.045, 0.355, 1);
 }
 
-/* The physical paper */
 .front, .back {
     position: absolute;
     width: 100%;
     height: 100%;
-    backface-visibility: hidden; /* Hides the back of the div when flipped */
+    backface-visibility: hidden;
     border-radius: 4px 15px 15px 4px;
-    box-shadow: inset 0 0 20px rgba(0,0,0,0.05);
+    /* Richer paper texture lighting */
+    box-shadow: inset 0 0 40px rgba(200, 180, 150, 0.15), 0 2px 10px rgba(0,0,0,0.1);
+    border: 1px solid #e8e3d3;
 }
 
-.front { background: #fdfbf7; } /* Off-white paper */
+.front { background: #fdfbf7; } 
 .back {
     background: #fdfbf7;
-    transform: rotateY(180deg); /* The back side starts flipped 180 deg */
+    transform: rotateY(180deg);
     border-radius: 15px 4px 4px 15px;
 }
 
-/* FLIPPING THE PAGE */
-.page.flipped {
-    transform: rotateY(-180deg); /* Swings the page left */
-}
+.page.flipped { transform: rotateY(-180deg); }
 
-/* COVER DESIGN */
+/* ELEGANT COVER DESIGN */
 .cover {
-    background: radial-gradient(circle at center, #2b1055, #15082e);
-    color: #ffdd59;
+    /* Sophisticated charcoal leather look */
+    background: linear-gradient(135deg, #1c1c1c, #2a2a2a);
+    color: #d4af37; /* Metallic Gold */
     display: flex;
     align-items: center;
     justify-content: center;
     text-align: center;
-    border: 2px solid #5a3e8c;
-    box-shadow: inset 0 0 50px rgba(0,0,0,0.5);
+    border: none;
+    box-shadow: inset 0 0 60px rgba(0,0,0,0.8);
+    position: relative;
 }
 
-.cover h1 { color: #ffdd59; margin-bottom: 10px; }
+/* Gold foil border accent on the cover */
+.cover::after {
+    content: '';
+    position: absolute;
+    top: 15px; left: 15px; right: 15px; bottom: 15px;
+    border: 1px solid rgba(212, 175, 55, 0.5);
+    border-radius: 2px 10px 10px 2px;
+    pointer-events: none;
+}
+.back.cover::after { border-radius: 10px 2px 2px 10px; }
+
+.cover h1 { 
+    color: #d4af37; 
+    font-size: 2.5rem;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.6); 
+}
+.cover .subtitle {
+    color: #a9914d;
+    font-style: italic;
+    margin-top: 5px;
+    letter-spacing: 1px;
+}
+
 .cover .open-book-btn { 
-    margin-top: 30px; 
-    background: #ffdd59; 
-    color: #000; 
-    padding: 12px 24px; 
-    border: none; 
-    font-weight: bold; 
-    border-radius: 20px; 
+    margin-top: 40px; 
+    background: transparent; 
+    color: #d4af37; 
+    padding: 10px 25px; 
+    border: 1px solid #d4af37; 
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 1.1rem;
+    border-radius: 3px; 
     cursor: pointer; 
-    transition: transform 0.2s;
+    transition: all 0.3s ease;
 }
-.cover .open-book-btn:hover { transform: scale(1.05); }
+.cover .open-book-btn:hover { 
+    background: #d4af37; 
+    color: #1c1c1c; 
+}
 
-/* PAGE CONTENT & SCROLLING */
+/* PAGE CONTENT */
 .page-content {
-    padding: 40px;
-    overflow-y: auto; /* Allows scrolling inside a page if content is long */
+    padding: 45px;
+    overflow-y: auto;
     overflow-x: hidden;
     height: 100%;
     display: flex;
     flex-direction: column;
 }
+.page-content::-webkit-scrollbar { width: 4px; }
+.page-content::-webkit-scrollbar-thumb { background: #dcd6c8; border-radius: 4px; }
 
-/* Hide scrollbar for a cleaner book look */
-.page-content::-webkit-scrollbar { width: 5px; }
-.page-content::-webkit-scrollbar-thumb { background: #ccc; border-radius: 5px; }
+/* TYPOGRAPHY UPDATES */
+h2 { 
+    border-bottom: 1px solid #d4af37; /* Gold accent underline */
+    padding-bottom: 8px; 
+    margin-bottom: 25px; 
+    font-weight: 700;
+}
+h3 { color: #555; font-size: 1.1rem; margin-bottom: 5px;}
+.mt-10 { margin-top: 10px; }
+.mt-20 { margin-top: 20px; }
+.date-text, .dim-text { color: #888; font-size: 0.9em; }
 
-/* TYPOGRAPHY & LAYOUT */
-h2 { border-bottom: 2px solid #ddd; padding-bottom: 10px; margin-bottom: 20px; }
-.profile-img { width: 120px; height: 120px; border-radius: 50%; object-fit: cover; margin-bottom: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.2); }
-.info-block { margin-bottom: 20px; }
-.info-block ul { margin-left: 20px; margin-top: 5px; }
+.profile-img { 
+    width: 130px; height: 130px; 
+    border-radius: 50%; 
+    object-fit: cover; 
+    margin-bottom: 20px; 
+    border: 3px solid #fdfbf7;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.15); 
+}
+.elegant-list { list-style-type: square; margin-left: 20px; color: #555; line-height: 1.8; }
+.bio-text { line-height: 1.6; color: #555; }
 
 /* BUTTONS */
 .page-footer { margin-top: auto; padding-top: 20px; display: flex; justify-content: space-between; }
 .next-btn, .prev-btn {
-    background: none; border: none; font-family: inherit; font-weight: bold; font-size: 1rem; color: #b71c1c; cursor: pointer; transition: 0.3s;
+    background: none; border: none; font-family: 'Playfair Display', serif; font-style: italic; font-size: 1.1rem; color: #a9914d; cursor: pointer; transition: 0.3s;
 }
-.next-btn:hover { transform: translateX(5px); }
-.prev-btn:hover { transform: translateX(-5px); }
+.next-btn:hover { transform: translateX(5px); color: #826e34; }
+.prev-btn:hover { transform: translateX(-5px); color: #826e34; }
 
-/* GALLERY & SKILLS */
-.filter-buttons { margin-bottom: 15px; }
-.filter-buttons button { background: #eee; border: none; padding: 5px 10px; border-radius: 15px; cursor: pointer; margin-right: 5px; transition: background 0.2s;}
-.filter-buttons button.active { background: #2b1055; color: #fff; }
-.gallery { display: flex; flex-wrap: wrap; gap: 10px; }
-.gallery-item { width: 80px; height: 110px; object-fit: cover; border-radius: 4px; transition: 0.3s; }
-.gallery-item:hover { transform: scale(1.1); }
+/* NEW CLEAN HOBBIES LIST */
+.hobbies-list { display: flex; flex-direction: column; gap: 20px; }
+.hobby-category h3 {
+    font-family: 'Source Sans Pro', sans-serif;
+    font-weight: 600;
+    font-size: 1rem;
+    color: #666;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+.hobby-category h3 i { color: #d4af37; margin-right: 5px; }
+.hobby-items { display: flex; gap: 15px; }
+.hobby-items img {
+    width: 70px; height: 100px; 
+    object-fit: cover; 
+    border-radius: 3px; 
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    transition: transform 0.3s;
+}
+.hobby-items img:hover { transform: translateY(-3px); box-shadow: 0 6px 15px rgba(0,0,0,0.15); }
 
-/* Updated Skill List with sizing fix and hover effect */
-.skill-list { display: flex; flex-wrap: wrap; gap: 20px; }
+/* SKILLS */
+.skill-list { display: flex; flex-wrap: wrap; gap: 25px; margin-top: 10px;}
 .skill-list img { 
-    width: 70px; 
-    height: 70px; 
+    width: 65px; height: 65px; 
     object-fit: contain; 
-    transition: transform 0.2s ease;
+    transition: transform 0.3s ease;
+    filter: drop-shadow(0 4px 6px rgba(0,0,0,0.05));
 }
 .skill-list img:hover { transform: translateY(-5px); }
 
-.soft-skills span { display: inline-block; background: #eee; padding: 6px 12px; border-radius: 15px; margin: 5px 5px 0 0; font-weight: 600;}
+.soft-skills span { 
+    display: inline-block; 
+    background: #f0ebe1; 
+    color: #555;
+    padding: 8px 16px; 
+    border-radius: 20px; 
+    margin: 8px 8px 0 0; 
+    font-size: 0.9rem;
+    border: 1px solid #e6dfcf;
+}
 
 /* FORM */
 .contact-form { display: flex; flex-direction: column; gap: 15px; }
-.contact-form input, .contact-form textarea { padding: 10px; border: 1px solid #ccc; border-radius: 4px; font-family: inherit; }
-.contact-form button { background: #b71c1c; color: #fff; border: none; padding: 12px; border-radius: 4px; cursor: pointer; font-weight: bold; transition: background 0.2s; }
-.contact-form button:hover { background: #8e1515; }
-.social-links a { color: #b71c1c; text-decoration: none; font-weight: 600; }
-.social-links a:hover { text-decoration: underline; }
+.contact-form input, .contact-form textarea { 
+    padding: 12px; 
+    border: 1px solid #ddd; 
+    border-radius: 3px; 
+    font-family: inherit; 
+    background: #faf8f2;
+}
+.contact-form input:focus, .contact-form textarea:focus {
+    outline: none; border-color: #d4af37; background: #fff;
+}
+.contact-form button { 
+    background: #2c3e50; 
+    color: #fff; 
+    border: none; 
+    padding: 14px; 
+    border-radius: 3px; 
+    cursor: pointer; 
+    font-family: 'Playfair Display', serif;
+    font-size: 1.1rem;
+    transition: background 0.3s; 
+}
+.contact-form button:hover { background: #1a252f; }
+.social-links p { margin-bottom: 10px; color: #555; }
+.social-links a { color: #a9914d; text-decoration: none; font-weight: 600; }
+.social-links a:hover { text-decoration: underline; color: #826e34; }
+.social-links i { width: 20px; color: #2c3e50; }
