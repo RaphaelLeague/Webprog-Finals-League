@@ -7,90 +7,72 @@ document.addEventListener('DOMContentLoaded', () => {
     let currentLocation = 1;
     let numOfPages = pages.length;
 
-    // Initial Stack
-    function setStack() {
-        pages.forEach((page, index) => { 
-            page.style.zIndex = numOfPages - index; 
+    function updateZIndex() {
+        pages.forEach((page, index) => {
+            if (index < currentLocation - 1) {
+                page.style.zIndex = index + 1;
+            } else {
+                page.style.zIndex = numOfPages - index;
+            }
         });
     }
-    setStack();
+    updateZIndex();
 
     function goNextPage() {
         if (currentLocation <= numOfPages) {
             const page = pages[currentLocation - 1];
             page.classList.add("flipped");
             
-            // Adjust stacking halfway through flip
-            setTimeout(() => { 
-                page.style.zIndex = currentLocation; 
-            }, 600);
-            
             if (currentLocation === 1) book.style.transform = "translateX(0)";
             if (currentLocation === numOfPages) book.style.transform = "translateX(-200px)";
             
             currentLocation++;
+            setTimeout(updateZIndex, 600);
         }
     }
 
-    function goPrevPage() {
-        // RESET TO FRONT if on final page
-        if (currentLocation > numOfPages) {
-            book.style.transform = "translateX(200px)";
-            pages.forEach((page, index) => {
-                page.classList.remove("flipped");
-                setTimeout(() => { 
-                    page.style.zIndex = numOfPages - index; 
-                }, 600);
-            });
-            currentLocation = 1;
-        } 
-        else if (currentLocation > 1) {
-            const page = pages[currentLocation - 2];
-            page.classList.remove("flipped");
-            
-            setTimeout(() => { 
-                page.style.zIndex = (numOfPages - currentLocation) + 2; 
-            }, 600);
-            
-            if (currentLocation === 2) book.style.transform = "translateX(200px)";
+    function goPrevPage(event) {
+        if (currentLocation > 1) {
+            // Close Book reset logic
+            if (currentLocation > numOfPages && event.target.innerText.includes("Close Book")) {
+                resetBook();
+                return;
+            }
+
             currentLocation--;
+            const page = pages[currentLocation - 1];
+            page.classList.remove("flipped");
+
+            if (currentLocation === 1) book.style.transform = "translateX(200px)";
+            if (currentLocation === numOfPages) book.style.transform = "translateX(0)";
+            
+            setTimeout(updateZIndex, 600);
         }
+    }
+
+    function resetBook() {
+        book.style.transform = "translateX(200px)";
+        pages.forEach(page => page.classList.remove("flipped"));
+        currentLocation = 1;
+        setTimeout(updateZIndex, 600);
     }
 
     nextBtns.forEach(btn => btn.addEventListener("click", goNextPage));
-    prevBtns.forEach(btn => btn.addEventListener("click", goPrevPage));
+    prevBtns.forEach(btn => btn.addEventListener("click", (e) => goPrevPage(e)));
 
-    // Supabase Initialization
-    const supabaseUrl = 'https://safdltefbgdidkrwnjyf.supabase.co';
-    const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNhZmRsdGVmYmdkaWRrcnduanlmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzE2NzgxMjIsImV4cCI6MjA4NzI1NDEyMn0._Ya4kMNQ0FIcQ36tvUJE1LTzqTsqqnNAr9w34lBf8y0';
+    // Supabase
+    const _supabase = supabase.createClient('https://safdltefbgdidkrwnjyf.supabase.co', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNhZmRsdGVmYmdkaWRrcnduanlmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzE2NzgxMjIsImV4cCI6MjA4NzI1NDEyMn0._Ya4kMNQ0FIcQ36tvUJE1LTzqTsqqnNAr9w34lBf8y0');
     
-    if (typeof supabase !== 'undefined') {
-        const _supabase = supabase.createClient(supabaseUrl, supabaseKey);
-        const contactForm = document.getElementById('contactForm');
-        const formStatus = document.getElementById('formStatus');
-
-        contactForm?.addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const submitBtn = document.getElementById('submitBtn');
-            submitBtn.textContent = 'Sending...';
-            submitBtn.disabled = true;
-
-            const { error } = await _supabase.from('messages').insert([{
-                name: document.getElementById('senderName').value,
-                email: document.getElementById('senderEmail').value,
-                message: document.getElementById('senderMessage').value
-            }]);
-
-            if (error) {
-                formStatus.textContent = "Error: Please try again.";
-                formStatus.style.color = "red";
-            } else {
-                formStatus.textContent = "Message saved!";
-                formStatus.style.color = "green";
-                contactForm.reset();
-            }
-            submitBtn.textContent = 'Send to Database';
-            submitBtn.disabled = false;
-        });
-    }
+    document.getElementById('contactForm')?.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const btn = document.getElementById('submitBtn');
+        btn.disabled = true;
+        const { error } = await _supabase.from('messages').insert([{
+            name: document.getElementById('senderName').value,
+            email: document.getElementById('senderEmail').value,
+            message: document.getElementById('senderMessage').value
+        }]);
+        document.getElementById('formStatus').textContent = error ? "Error!" : "Message Saved!";
+        btn.disabled = false;
+    });
 });
