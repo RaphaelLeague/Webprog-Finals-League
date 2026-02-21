@@ -7,13 +7,12 @@ document.addEventListener('DOMContentLoaded', () => {
     let currentLocation = 1;
     let numOfPages = pages.length;
 
-    // Manages stacking so flipped pages stay on the left correctly
     function updateZIndex() {
         pages.forEach((page, index) => {
             if (index < currentLocation - 1) {
-                page.style.zIndex = index + 1; // Flipped pages stack up
+                page.style.zIndex = index + 1; // Flipped stack
             } else {
-                page.style.zIndex = numOfPages - index; // Remaining pages stack down
+                page.style.zIndex = numOfPages - index; // Remaining stack
             }
         });
     }
@@ -34,7 +33,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function goPrevPage(e) {
         if (currentLocation > 1) {
-            // FIX: If clicking "Close Book" on the final page reset to front
+            // FIX: "Close Book" logic on final page
             if (currentLocation > numOfPages && e.target.closest('.reset-trigger')) {
                 resetBook();
                 return;
