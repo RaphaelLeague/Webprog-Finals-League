@@ -8,15 +8,11 @@ document.addEventListener('DOMContentLoaded', () => {
     let currentLocation = 1;
     let numOfPages = pages.length;
 
-    // FIX: Redesigned Z-Index logic to ensure flipped pages are always "on top" for clicks
     function updateZIndex() {
         pages.forEach((page, index) => {
             if (index < currentLocation - 1) {
-                // Pages on the left (flipped)
-                // We add numOfPages to ensure they are higher than anything on the right
                 page.style.zIndex = numOfPages + index; 
             } else {
-                // Pages on the right (unflipped)
                 page.style.zIndex = numOfPages - index;
             }
         });
@@ -74,5 +70,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }]);
         document.getElementById('formStatus').textContent = error ? "Error!" : "Message Saved!";
         btn.disabled = false;
+        
+        if (!error) document.getElementById('contactForm').reset();
     });
 });
