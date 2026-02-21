@@ -33,7 +33,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function goPrevPage(e) {
         if (currentLocation > 1) {
-            // FIX: Handle "Close Book" reset logic
+            // Check for Reset to Front logic
             if (currentLocation > numOfPages && e.target.innerText.includes("Close Book")) {
                 resetBook();
                 return;
