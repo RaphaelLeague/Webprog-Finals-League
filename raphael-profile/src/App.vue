@@ -51,15 +51,25 @@ const resetBook = () => {
     setTimeout(updateZIndex, 600);
 };
 
-onMounted(() => {
-    pages.value = document.querySelectorAll('.page');
-    updateZIndex();
-});
-
-// --- SUPABASE LOGIC ---
+// --- SUPABASE SETUP ---
 const supabaseUrl = 'https://safdltefbgdidkrwnjyf.supabase.co';
-const supabaseKey = 'YOUR_SUPABASE_ANON_KEY'; // PASTE YOUR SUPABASE KEY HERE
+const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNhZmRsdGVmYmdkaWRrcnduanlmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzE2NzgxMjIsImV4cCI6MjA4NzI1NDEyMn0._Ya4kMNQ0FIcQ36tvUJE1LTzqTsqqnNAr9w34lBf8y0';
 const supabase = createClient(supabaseUrl, supabaseKey);
+
+const guestbookMessages = ref([]);
+
+const fetchMessages = async () => {
+    const { data, error } = await supabase
+        .from('messages')
+        .select('*')
+        .order('id', { ascending: false });
+
+    if (error) {
+        console.error('Error fetching guestbook:', error);
+    } else {
+        guestbookMessages.value = data;
+    }
+};
 
 const senderName = ref('');
 const senderEmail = ref('');
@@ -85,9 +95,17 @@ const submitMessage = async () => {
         senderName.value = '';
         senderEmail.value = '';
         senderMessage.value = '';
+        
+        fetchMessages(); 
     }
     isSending.value = false;
 };
+
+onMounted(() => {
+    pages.value = document.querySelectorAll('.page');
+    updateZIndex();
+    fetchMessages(); 
+});
 </script>
 
 <template>
@@ -187,7 +205,7 @@ const submitMessage = async () => {
                         <input v-model="senderEmail" type="email" placeholder="Your Email" required>
                         <textarea v-model="senderMessage" placeholder="Your Message" rows="3" required></textarea>
                         <button type="submit" :disabled="isSending">{{ isSending ? 'Sending...' : 'Send to Database' }}</button>
-                        <p style="color: #2e7d32; font-weight: bold;">{{ formStatus }}</p>
+                        <p style="color: #2e7d32; font-weight: bold; text-align: center;">{{ formStatus }}</p>
                     </form>
                     <div class="page-footer">
                         <button @click="goPrevPage" class="prev-btn"><i class="fas fa-arrow-left"></i> Prev</button>
@@ -197,12 +215,25 @@ const submitMessage = async () => {
 
             <div class="page" id="p4">
                 <div class="front page-content">
-                    <h2>Thanks for reading!</h2>
-                    <div style="line-height: 2;">
-                        <p><i class="fas fa-envelope" style="color: #2c3e50; width: 25px;"></i> raphaelgabriel.league@gmail.com</p>
-                        <p><i class="fab fa-linkedin" style="color: #2c3e50; width: 25px;"></i> linkedin.com/in/raphael-league</p>
-                        <p><i class="fab fa-github" style="color: #2c3e50; width: 25px;"></i> github.com/RaphaelLeague</p>
+                    <h2>Guestbook</h2>
+                    
+                    <div class="guestbook-container">
+                        <div v-if="guestbookMessages.length === 0" style="text-align: center; color: #888; font-style: italic; margin-top: 20px;">
+                            No messages yet. Write one on the previous page!
+                        </div>
+                        
+                        <div v-for="msg in guestbookMessages" :key="msg.id" class="guestbook-entry">
+                            <strong>{{ msg.name }}</strong> <span style="font-size: 0.85em; color: #888;">says:</span>
+                            <p style="margin-top: 4px; font-size: 0.95rem; color: #444;">"{{ msg.message }}"</p>
+                        </div>
                     </div>
+
+                    <div class="social-icons">
+                        <a href="mailto:raphaelgabriel.league@gmail.com"><i class="fas fa-envelope"></i></a>
+                        <a href="https://linkedin.com/in/raphael-league" target="_blank"><i class="fab fa-linkedin"></i></a>
+                        <a href="https://github.com/RaphaelLeague" target="_blank"><i class="fab fa-github"></i></a>
+                    </div>
+
                     <div class="page-footer">
                         <button @click="resetBook" class="reset-btn-trigger"><i class="fas fa-undo"></i> Close Book</button>
                     </div>
@@ -213,3 +244,42 @@ const submitMessage = async () => {
         </div>
     </div>
 </template>
+
+<style scoped>
+.guestbook-container {
+    flex-grow: 1;
+    overflow-y: auto;
+    background: #faf8f2;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 15px;
+    margin-bottom: 20px;
+    max-height: 250px;
+}
+
+.guestbook-container::-webkit-scrollbar { width: 5px; }
+.guestbook-container::-webkit-scrollbar-thumb { background: #dcd6c8; border-radius: 4px; }
+
+.guestbook-entry {
+    border-bottom: 1px solid #e8e3d3;
+    padding-bottom: 12px;
+    margin-bottom: 12px;
+}
+.guestbook-entry:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+}
+
+.social-icons {
+    display: flex;
+    justify-content: center;
+    gap: 25px;
+    margin-bottom: 15px;
+    font-size: 1.5rem;
+}
+.social-icons a {
+    color: #2c3e50;
+    transition: color 0.3s;
+}
+.social-icons a:hover { color: #d4af37; }
+</style>
