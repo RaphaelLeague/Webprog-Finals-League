@@ -115,7 +115,7 @@ onMounted(() => {
             <div class="page" id="p1">
                 <div class="front cover">
                     <h1>Raphael League</h1>
-                    <p class="subtitle">IT Student & Researcher</p>
+                    <p class="subtitle">2nd Year - IT Student</p>
                     <button @click="goNextPage" class="next-btn open-book-btn">Open Book <i class="fas fa-arrow-right"></i></button>
                 </div>
                 <div class="back page-content">
@@ -171,6 +171,13 @@ onMounted(() => {
                             <div class="hobby-items">
                                 <img src="https://upload.wikimedia.org/wikipedia/en/b/b9/Freudian_by_Daniel_Caesar.jpg" alt="Music">
                                 <img src="https://upload.wikimedia.org/wikipedia/en/e/eb/Bruno_Mars_-_Doo-Wops_%26_Hooligans.png" alt="Music">
+                            </div>
+                        </div>
+                        <div class="hobby-category">
+                            <h3><i class="fas fa-film"></i> Movie</h3>
+                            <div class="hobby-items">
+                                <img src="https://resizing.flixster.com/-XZAfHZM39UwaGJIFWKAE8fS0ak=/v3/t/assets/p10569374_p_v13_ae.jpg" alt="Movie">
+                                <img src="https://m.media-amazon.com/images/M/MV5BZWM0OWVmNTEtNWVkOS00MzgyLTkyMzgtMmE2ZTZiNjY4MmFiXkEyXkFqcGc@._V1_FMjpg_UX1000_.jpg" alt="Movie">
                             </div>
                         </div>
                     </div>
