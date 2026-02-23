@@ -84,9 +84,16 @@ h2 { border-bottom: 1px solid #d4af37; padding-bottom: 8px; margin-bottom: 20px;
 .back.cover::after { border-radius: 10px 2px 2px 10px; }
 
 .cover h1 { 
-    color: #d4af37; font-size: 36px; font-family: 'Playfair Display', serif;
-    text-shadow: 2px 2px 5px rgba(0,0,0,0.8); margin-bottom: 10px;
-    letter-spacing: 1px; padding: 0 15px; line-height: 1.2;
+    color: #d4af37; 
+    font-size: 32px;
+    font-family: 'Playfair Display', serif;
+    text-shadow: 2px 2px 5px rgba(0,0,0,0.8); 
+    margin-bottom: 10px;
+    letter-spacing: 1px; 
+    text-align: center;
+    width: 100%;
+    padding-left: 15px; 
+    line-height: 1.2;
 }
 .cover .subtitle { color: #e8e3d3; font-style: italic; font-size: 16px; letter-spacing: 1.5px; }
 .cover .open-book-btn { 

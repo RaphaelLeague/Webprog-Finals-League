@@ -142,6 +142,7 @@ onMounted(() => {
                         <ul style="list-style-type: square; margin-left: 20px; color: #555; line-height: 1.8;">
                             <li><strong>RamBus:</strong> Developer and Researcher</li>
                             <li><strong>Smoke & Fire Detector:</strong> Developer and Researcher</li>
+                            <li><strong>Library Management System:</strong> Developer and Database Manager</li>
                         </ul>
                     </div>
                     <div class="page-footer">
@@ -204,7 +205,7 @@ onMounted(() => {
                         <input v-model="senderName" type="text" placeholder="Your Name" required>
                         <input v-model="senderEmail" type="email" placeholder="Your Email" required>
                         <textarea v-model="senderMessage" placeholder="Your Message" rows="3" required></textarea>
-                        <button type="submit" :disabled="isSending">{{ isSending ? 'Sending...' : 'Send to Database' }}</button>
+                        <button type="submit" :disabled="isSending">{{ isSending ? 'Sending...' : 'Submit' }}</button>
                         <p style="color: #2e7d32; font-weight: bold; text-align: center;">{{ formStatus }}</p>
                     </form>
                     <div class="page-footer">
